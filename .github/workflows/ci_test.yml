@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  Test_app:
 
     runs-on: ubuntu-latest
     steps:
@@ -26,6 +26,9 @@ jobs:
 
     - name: Test with Isort
       run: isort --check-only -diff --profile black .
+
+    - name: Test with Mypy
+      run: mypy .
       
     - name: Test with Pytest
       run: pytest -v
