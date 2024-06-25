@@ -5,3 +5,6 @@ flake8-pie
 isort
 mypy
 pytest
+fastapi
+sqlalchemy
+pydantic
