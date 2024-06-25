@@ -8,4 +8,4 @@ pytest
 fastapi
 sqlalchemy
 pydantic
-sqlite3
+sqlite
