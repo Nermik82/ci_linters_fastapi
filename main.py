@@ -14,12 +14,18 @@ app = FastAPI()
 
 @app.on_event("startup")
 async def startup():
+    """
+    Действия при старте.
+    """
     async with engine.begin() as conn:
         await conn.run_sync(models.Base.metadata.create_all)
 
 
 @app.on_event("shutdown")
 async def shutdown():
+    """
+    Действия при завершении работы.
+    """
     await session.close()
     await engine.dispose()
 
