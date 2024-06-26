@@ -1,5 +1,4 @@
-from typing import Dict, List, Sequence, Any
-
+from typing import Any, Dict, List, Sequence
 
 from fastapi import FastAPI, Path
 from sqlalchemy import update
