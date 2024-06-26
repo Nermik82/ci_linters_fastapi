@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Sequence< Any
 
 from fastapi import FastAPI, Path
 from sqlalchemy import update
@@ -41,7 +41,7 @@ async def fill_db_with_some_recipes() -> Dict[str, str]:
 
 
 @app.get("/recipes/", response_model=List[schemas.BaseRecipe])
-async def get_all_recipes() -> List[models.Recipe]:
+async def get_all_recipes() -> Sequence[Any]:
     """
     Возвращает список всех рецептов.
     """
@@ -64,25 +64,25 @@ async def get_detailed_recipe(
         ge=1,
         description="Номер рецепта для детального просмотра.",
     )
-) -> List[models.Recipe]:
+) -> Sequence[Any]:
     """
     Возвращает детализированный рецепт по заданному id.
     """
     # сначала увеличиваем счетчик просмотров
-    stmt = (
+    stmt_1 = (
         update(models.Recipe)
         .where(models.Recipe.id == idx)
         .values(view_count=models.Recipe.view_count + 1)
     )
-    await session.execute(stmt)
+    await session.execute(stmt_1)
 
     # затем получаем нужные данные из базы и возвращаем их
-    stmt = select(
+    stmt_2 = select(
         models.Recipe.dish_name,
         models.Recipe.cooking_time,
         models.Recipe.ingredients,
         models.Recipe.description,
     ).where(models.Recipe.id == idx)
-    res = await session.execute(stmt)
+    res = await session.execute(stmt_2)
     await session.commit()
     return res.all()
