@@ -16,6 +16,7 @@ async_session = async_sessionmaker(
 session = async_session()
 Base = declarative_base()
 
+# данные для первичного заполнения базы данных
 DATA = [
     {
         "dish_name": "Классическая шарлотка",
