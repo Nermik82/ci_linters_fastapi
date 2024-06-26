@@ -6,6 +6,9 @@ client = TestClient(app)
 
 
 def test_fill_func():
+    """
+    Тест заполнения базы данных.
+    """
     response = client.get("/")
     assert response.status_code == 200
     msg = response.json()
