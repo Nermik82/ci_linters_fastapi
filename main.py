@@ -1,8 +1,10 @@
-from typing import Dict, List, Sequence< Any
+from typing import Dict, List, Sequence, Any
+
 
 from fastapi import FastAPI, Path
 from sqlalchemy import update
 from sqlalchemy.future import select
+from sqlalchemy.orm import class_mapper
 
 import models
 import schemas
@@ -28,10 +30,11 @@ async def fill_db_with_some_recipes() -> Dict[str, str]:
     """
     Если база пустая, то в нее заносятся данные из переменной DATA.
     """
-    res = await session.execute(select(models.Recipe))
+    recipe = class_mapper(models.Recipe)
+    res = await session.execute(select(recipe))
     if len(res.all()) == 0:
         await session.run_sync(
-            lambda ses: ses.bulk_insert_mappings(models.Recipe, DATA)
+            lambda ses: ses.bulk_insert_mappings(recipe, DATA)
         )
         await session.commit()
         msg = "Данные из переменной DATA занесены в базу данных."
