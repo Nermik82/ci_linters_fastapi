@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Sequence
+from typing import Annotated, Any, Dict, List, Sequence
 
 from fastapi import FastAPI, Path
 from sqlalchemy import update
@@ -60,12 +60,15 @@ async def get_all_recipes() -> Sequence[Any]:
 
 @app.get("/recipes/{idx}", response_model=List[schemas.DetailedRecipe])
 async def get_detailed_recipe(
-    idx: int = Path(
-        default=...,
-        title="Номер рецепта в базе данных.",
-        ge=1,
-        description="Номер рецепта для детального просмотра.",
-    )
+    idx: Annotated[
+        int,
+        Path(
+            default=...,
+            title="Номер рецепта в базе данных.",
+            ge=1,
+            description="Номер рецепта для детального просмотра.",
+        ),
+    ]
 ) -> Sequence[Any]:
     """
     Возвращает детализированный рецепт по заданному id.
